@@ -4,6 +4,7 @@ export PAGER='most'
 #export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export PATH="/opt/cuda/bin:$PATH"
 export CUDA_HOME="/opt/cuda"
+export PATH=$PATH:/usr/bin/psql
 #--export PATH="$HOME/.local/bin":$PATH
 #Ibus settings if you need them
 #type ibus-setup in terminal to change settings and start the daemon
