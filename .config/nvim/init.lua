@@ -370,13 +370,13 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      -- vim.keymap.set('n', '<leader>sf', builtin.find_files  , { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       -- Modify find_files to only search current buffer
-      vim.keymap.set('n', '<leader>sf', function()
-        builtin.find_files {
-          cwd = vim.fn.expand '%p:h',
-        }
-      end, { desc = '[S]earch [F]iles' })
+      -- vim.keymap.set('n', '<leader>sf', function()
+      --   builtin.find_files {
+      --     cwd = vim.fn.expand '%p:h',
+      --   }
+      -- end, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -405,7 +405,13 @@ require('lazy').setup({
 
       -- Shortcut for searching your neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
+        -- builtin.find_files { cwd = vim.fn.stdpath 'config' } doesn't work with stow
+        builtin.find_files { cwd = '~/.dotfiles/.config/nvim' }
+      end, { desc = '[S]earch [N]eovim files' })
+      -- Shortcut for searching .conf files
+      vim.keymap.set('n', '<leader>sc', function()
+        -- builtin.find_files { cwd = vim.fn.stdpath 'config' } doesn't work with stow
+        builtin.find_files { cwd = '~/.dotfiles/.config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
@@ -544,7 +550,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         bashls = {},
         dockerls = {},
         jedi_language_server = {},
