@@ -157,7 +157,13 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 
 -- Set colorcolumn
-vim.opt.colorcolumn = '80'
+vim.opt.colorcolumn = '100'
+
+-- Disable netrw for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -625,6 +631,17 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
+    lazy = false,
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
     opts = {
       notify_on_error = false,
       format_on_save = {
@@ -634,11 +651,16 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettierd", "prettier" } },
+      },
+      formatters = {
+        black = {
+          prepend_args = { '--line-length', '100' },
+        },
       },
     },
   },
@@ -772,12 +794,12 @@ require('lazy').setup({
   {
     'folke/todo-comments.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = false },
+    opts = { signs = true },
     -- config = function()
-    --     -- Keybinds
-    --     vim.keymap.set('n', '<leader>tt', vim.cmd.TodoTrouble, { desc = 'TodoTelecope' })
-    --     vim.keymap.set('n', '<leader>tq', vim.cmd.TodoQuckFix, { desc = 'TodoQuickFix' })
-    --     vim.keymap.set('n', '<leader>tl', vim.cmd.TodoLocList, { desc = 'TodoLocList' })
+    --   -- Keybinds
+    --   vim.keymap.set('n', '<leader>tt', vim.cmd.TodoTrouble, { desc = 'TodoTelecope' })
+    --   vim.keymap.set('n', '<leader>tq', vim.cmd.TodoQuckFix, { desc = 'TodoQuickFix' })
+    --   vim.keymap.set('n', '<leader>tl', vim.cmd.TodoLocList, { desc = 'TodoLocList' })
     -- end,
   },
 
@@ -880,15 +902,100 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo' })
     end,
   },
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it[S]tatus' })
-    end,
-  },
+  -- {
+  --   'tpope/vim-fugitive',
+  --   config = function()
+  --     vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it[S]tatus' })
+  --   end,
+  -- },
   {
     'christoomey/vim-tmux-navigator',
   },
+  {
+    'TimUntersberger/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+    },
+    config = function()
+      require('neogit').setup {
+        integrations = {
+          diffview = true, -- Integrate with diffview.nvim
+        },
+        vim.keymap.set('n', '<leader>gs', vim.cmd.Neogit, { desc = '[G]it[S]tatus' }),
+      }
+    end,
+  },
+  {
+    'sindrets/diffview.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
+      require('diffview').setup {
+        diff_binaries = false, -- Show diffs for binaries
+        use_icons = true, -- Requires nvim-web-devicons
+        enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+        signs = {
+          fold_closed = '',
+          fold_open = '',
+          done = '✓',
+        },
+        file_panel = {
+          listing_style = 'tree', -- One of 'list' or 'tree'
+          tree_options = {
+            flatten_dirs = true, -- Flatten dirs that only contain one single dir
+            folder_statuses = 'always', -- One of 'never', 'only_folded' or 'always'.
+          },
+          win_config = {
+            position = 'left', -- One of 'left', 'right', 'top', 'bottom'
+            width = 35, -- Only applies when position is 'left' or 'right'
+            height = 10, -- Only applies when position is 'top' or 'bottom'
+          },
+        },
+        file_history_panel = {
+          log_options = {
+            max_count = 256, -- Limit the number of commits
+            follow = false, -- Follow renames (only for single file)
+            all = false, -- Include all refs under 'refs/' including HEAD
+            merges = false, -- List only merge commits
+            no_merges = false, -- List no merge commits
+            reverse = false, -- List commits in reverse order
+          },
+          win_config = {
+            position = 'bottom',
+            width = 35,
+            height = 16,
+          },
+        },
+        default_args = {
+          DiffviewOpen = {},
+          DiffviewFileHistory = {},
+        },
+        hooks = {}, -- See ':h diffview-config-hooks'
+      }
+      vim.api.nvim_set_keymap('n', '<leader>do', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>dc', ':DiffviewClose<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>dh', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
+    end,
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('nvim-tree').setup {
+        sort = {
+          sorter = 'case_sensitive',
+        },
+        view = {
+          width = 30,
+        },
+      }
+    end,
+  },
+
   --   local builtin = require 'telescope.builtin'
   --  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 
