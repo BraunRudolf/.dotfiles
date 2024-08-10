@@ -159,11 +159,11 @@ vim.opt.hlsearch = true
 -- Set colorcolumn
 vim.opt.colorcolumn = '100'
 
--- Disable netrw for nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
+-- Configure netrw
+-- remove the banner
+vim.g.netrw_banner = 0
+-- style of netrw
+vim.g.netrw_liststyle = 3
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -194,9 +194,9 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 --  See `:help wincmd` for a list of all window commands
 -- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
--- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
--- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
--- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -288,16 +288,17 @@ require('lazy').setup({
       require('which-key').setup()
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       }
     end,
   },
-
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
@@ -388,7 +389,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      -- vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -667,6 +668,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
+    lazy = false,
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -902,6 +904,10 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo' })
     end,
   },
+  {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter',
+  },
   -- {
   --   'tpope/vim-fugitive',
   --   config = function()
@@ -910,6 +916,21 @@ require('lazy').setup({
   -- },
   {
     'christoomey/vim-tmux-navigator',
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+    },
+    keys = {
+      { '<c-h>', '<cmd>TmuxNavigateLeft<cr>' },
+      { '<c-j>', '<cmd>TmuxNavigateDown<cr>' },
+      { '<c-k>', '<cmd>TmuxNavigateUp<cr>' },
+      { '<c-l>', '<cmd>TmuxNavigateRight<cr>' },
+      { '<c-\\>', '<cmd>TmuxNavigatePrevious<cr>' },
+    },
+    lazy = false,
   },
   {
     'TimUntersberger/neogit',
@@ -951,21 +972,21 @@ require('lazy').setup({
             height = 10, -- Only applies when position is 'top' or 'bottom'
           },
         },
-        file_history_panel = {
-          log_options = {
-            max_count = 256, -- Limit the number of commits
-            follow = false, -- Follow renames (only for single file)
-            all = false, -- Include all refs under 'refs/' including HEAD
-            merges = false, -- List only merge commits
-            no_merges = false, -- List no merge commits
-            reverse = false, -- List commits in reverse order
-          },
-          win_config = {
-            position = 'bottom',
-            width = 35,
-            height = 16,
-          },
-        },
+        -- file_history_panel = {
+        --   log_options = {
+        --     max_count = 256, -- Limit the number of commits
+        --     follow = false, -- Follow renames (only for single file)
+        --     all = false, -- Include all refs under 'refs/' including HEAD
+        --     merges = false, -- List only merge commits
+        --     no_merges = false, -- List no merge commits
+        --     reverse = false, -- List commits in reverse order
+        --   },
+        --   win_config = {
+        --     position = 'bottom',
+        --     width = 35,
+        --     height = 16,
+        --   },
+        -- },
         default_args = {
           DiffviewOpen = {},
           DiffviewFileHistory = {},
@@ -975,24 +996,6 @@ require('lazy').setup({
       vim.api.nvim_set_keymap('n', '<leader>do', ':DiffviewOpen<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>dc', ':DiffviewClose<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>dh', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
-    end,
-  },
-  {
-    'nvim-tree/nvim-tree.lua',
-    version = '*',
-    lazy = false,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require('nvim-tree').setup {
-        sort = {
-          sorter = 'case_sensitive',
-        },
-        view = {
-          width = 30,
-        },
-      }
     end,
   },
 
