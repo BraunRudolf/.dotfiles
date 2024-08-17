@@ -335,6 +335,7 @@ require('lazy').setup({
       -- it can fuzzy find! It's more than just a "file finder", it can search
       -- many different aspects of Neovim, your workspace, LSP, and more!
       --
+
       -- The easiest way to use telescope, is to start by doing something like:
       --  :Telescope help_tags
       --
@@ -560,7 +561,6 @@ require('lazy').setup({
         pyright = {},
         bashls = {},
         dockerls = {},
-        jedi_language_server = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -661,6 +661,7 @@ require('lazy').setup({
       formatters = {
         black = {
           prepend_args = { '--line-length', '100' },
+          timeout_ms = 5500,
         },
       },
     },
