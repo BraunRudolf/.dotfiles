@@ -5,5 +5,5 @@ return {
     file_types = { 'markdown' },
   },
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
-  ft = { 'markdown', 'Avante' },
+  ft = { 'markdown' },
 }
