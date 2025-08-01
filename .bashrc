@@ -35,6 +35,15 @@ fi
 #ignore upper and lowercase when TAB completion
 bind "set completion-ignore-case on"
 
+# Opne man with vim
+[[ $- != *i* ]] && return
+set -o vi 
+
+alias vim='nvim'
+HISTSIZE=5000
+HISTFILESIZE=10000
+
+export MANPAGER='nvim +Man!'
 ### ALIASES ###
 #k3s kubctl
 #alias kubeclt ='k3s kubeclt'
