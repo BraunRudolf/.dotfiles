@@ -1,0 +1,117 @@
+/*
+ * Waybar Gruvbox Dark Theme
+ * This CSS file styles Waybar with the Gruvbox Dark color palette.
+ * To use, save this file as `style.css` in your Waybar configuration directory.
+ */
+
+/* ================== Main Bar ================== */
+* {
+    /* Use the Inter font, which is a modern sans-serif font */
+    font-family: "SeriousShanns Nerd Font Mono";
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #282828; /* Gruvbox dark background */
+    border: 2px solid #a89984; /* Gruvbox gray for border */
+    border-radius: 8px; /* Rounded corners for the bar */
+    color: #ebdbb2; /* Gruvbox light foreground */
+    margin: 5px;
+}
+
+/* ================== Modules ================== */
+.modules-left,
+.modules-center,
+.modules-right {
+    padding: 0 5px;
+}
+
+#workspaces,
+#pulseaudio,
+#backlight,
+#network,
+#battery,
+#clock,
+#tray,
+#custom-updates,
+#window {
+    background-color: #3c3836; /* Darker gray for modules */
+    border-radius: 5px;
+    padding: 2px 10px;
+    margin: 3px;
+    color: #ebdbb2; /* Light text color */
+}
+
+/* ================== Module-specific Styling ================== */
+
+/* Workspaces */
+#workspaces button {
+    color: #83a598; /* Gruvbox green/teal for inactive workspaces */
+    background-color: #3c3836;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0 2px;
+}
+
+/* Active workspace */
+#workspaces button.active {
+    background-color: #458588; /* Gruvbox blue for active workspace */
+    color: #ebdbb2;
+}
+
+/* Hover over workspaces */
+#workspaces button:hover {
+    background-color: #b16286; /* Gruvbox purple for hover */
+    color: #ebdbb2;
+}
+
+/* Window title */
+#window {
+    background-color: #504945; /* A subtle different shade for the window title */
+    font-weight: bold;
+}
+
+/* Volume */
+#pulseaudio {
+    color: #8ec07c; /* Gruvbox light green */
+}
+
+#pulseaudio.muted {
+    color: #fb4934; /* Gruvbox red when muted */
+}
+
+/* Backlight */
+#backlight {
+    color: #fe8019; /* Gruvbox orange */
+}
+
+/* Network */
+#network {
+    color: #fabd2f; /* Gruvbox yellow */
+}
+
+#network.disconnected {
+    color: #fb4934; /* Gruvbox red when disconnected */
+}
+
+/* Battery */
+#battery {
+    color: #b8bb26; /* Gruvbox light yellow-green */
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #8ec07c; /* Gruvbox green when charging */
+}
+
+#battery.critical {
+    color: #fb4934; /* Gruvbox red when critical */
+}
+
+/* Clock */
+#clock {
+    color: #83a598; /* Gruvbox teal */
+}
+
+

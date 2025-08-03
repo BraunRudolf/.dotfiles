@@ -1,0 +1,110 @@
+/*
+ * Waybar Gruvbox Dark Config
+ * This configuration file sets up a standard Waybar layout with common modules.
+ * It's designed to be used with the accompanying Gruvbox CSS file.
+ *
+ * To use:
+ * 1. Save this file as `config.jsonc` in your Waybar configuration directory (~/.config/waybar/).
+ * 2. Save the style.css file provided as `style.css` in the same directory.
+ * 3. Reload Waybar to see the changes.
+ */
+{
+    "layer": "top", // Display Waybar at the top layer
+    "position": "top", // Position the bar at the top of the screen
+    "height": 30, // Set the height of the bar
+
+    // Modules to be displayed in the Waybar
+    "modules-left": [
+        "hyprland/workspaces" // A module for Hyprland workspaces
+    ],
+    "modules-center": [
+        "hyprland/window" // A module to display the active window title
+    ],
+    "modules-right": [
+        "custom/updates",
+        "pulseaudio",
+	"pulseaudio#microphone",
+        "backlight",
+        "network",
+        "battery",
+        "clock",
+        "tray"
+    ],
+
+
+    // Individual module configurations
+    "hyprland/workspaces": {
+        "format": " {icon} ",
+        "format-icons": {
+            "1": "1", // Gruvbox font icons
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+        },
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
+    "hyprland/window": {
+        "max-length": 50, // Limit the length of the window title
+        "format": "  {}", // Add an icon
+        "tooltip": true
+    },
+
+    "custom/updates": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/update-sys.sh",
+        "on-click": "~/.config/waybar/scripts/update-sys.sh update",
+        "interval": 300,
+        "tooltip": true
+    },
+
+    // "battery": {
+    //     "states": {
+    //         "good": 90,
+    //         "warning": 30,
+    //         "critical": 15
+    //     },
+    //     "format": "{icon} {capacity}%",
+    //     "format-charging": "󱐋 {capacity}%", // Charging icon
+    //     "format-plugged": " {capacity}%", // Plugged-in icon
+    //     "format-alt": "{time}",
+    //     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"] // Gruvbox battery icons
+    // },
+
+    "pulseaudio": {
+        "format": "󰕾 {volume}%", // Volume icon
+        "format-muted": "󰖁 Muted", // Muted icon
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "pulseaudio#microphone": {
+        "format": "󰍬 {volume}%", // Volume icon
+        "format-muted": "󰍭 Muted", // Muted icon
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "backlight": {
+        "format": "󰃠 {percent}%", // Backlight icon
+        "format-alt": "󰃠 {percent}%"
+    },
+
+    "network": {
+        "format-wireless": " {essid}", // Wifi icon
+        "format-ethernet": "󰈀 {ifname}", // Ethernet icon
+        "format-disconnected": "󰤮 Disconnected", // Disconnected icon
+        "tooltip": true
+    },
+
+    "clock": {
+        "format": "󰥔 {:%H:%M}", // Clock icon with 24-hour format
+        "tooltip-format": "<big>{:%A, %B %d, %Y}</big>"
+    },
+
+    "tray": {
+        "icon-size": 20
+    }
+}
+

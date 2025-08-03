@@ -4,7 +4,6 @@ export PAGER='most'
 #export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export PATH="/opt/cuda/bin:$PATH"
 export CUDA_HOME="/opt/cuda"
-export PATH=$PATH:/usr/bin/psql
 #--export PATH="$HOME/.local/bin":$PATH
 #Ibus settings if you need them
 #type ibus-setup in terminal to change settings and start the daemon
@@ -12,7 +11,6 @@ export PATH=$PATH:/usr/bin/psql
 #export GTK_IM_MODULE=ibus
 #export XMODIFIERS=@im=dbus
 #export QT_IM_MODULE=ibus
-export DISPLAY=:0
 
 PS1='[\u@\h \W]\$ '
 
@@ -35,15 +33,6 @@ fi
 #ignore upper and lowercase when TAB completion
 bind "set completion-ignore-case on"
 
-# Opne man with vim
-[[ $- != *i* ]] && return
-set -o vi 
-
-alias vim='nvim'
-HISTSIZE=5000
-HISTFILESIZE=10000
-
-export MANPAGER='nvim +Man!'
 ### ALIASES ###
 #k3s kubctl
 #alias kubeclt ='k3s kubeclt'
@@ -282,7 +271,7 @@ alias nresolv="sudo $EDITOR /etc/resolv.conf"
 alias nb="$EDITOR ~/.bashrc"
 alias nz="$EDITOR ~/.zshrc"
 alias nf="$EDITOR ~/.config/fish/config.fish"
-alias nneofetch="$EDITOR ~/.config/neofetch/config.conf"
+#alias nneofetch="$EDITOR ~/.config/neofetch/config.conf"
 alias nplymouth="sudo $EDITOR /etc/plymouth/plymouthd.conf"
 alias nvconsole="sudo $EDITOR /etc/vconsole.conf"
 
@@ -418,7 +407,7 @@ alias personal='cp -Rf /personal/* ~'
 [[ -f ~/.bashrc-personal ]] && . ~/.bashrc-personal
 
 # reporting tools - install when not installed
-neofetch
+#neofetch
 #screenfetch
 #alsi
 #paleofetch

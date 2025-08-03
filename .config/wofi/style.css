@@ -1,0 +1,82 @@
+/*
+ * Wofi Gruvbox Dark Theme
+ * Designed for use with Wayland.
+ *
+ * This theme uses the Gruvbox Dark color palette.
+ * To use, save this file as `style.css` in your Wofi config directory.
+ */
+
+/* ================== General Window Settings ================== */
+window {
+    background-color: #282828; /* Gruvbox dark background */
+    border: 2px solid #a89984; /* Gruvbox gray for border */
+    border-radius: 8px; /* Rounded corners for the window */
+    font-family: "monospace"; /* A simple, clear font */
+    color: #ebdbb2; /* Gruvbox light foreground */
+    padding: 10px;
+    margin: 10px;
+}
+
+/* ================== Inner and Outer Boxes ================== */
+#outer-box {
+    margin: 5px;
+    padding: 5px;
+}
+
+#inner-box {
+    margin: 5px;
+    padding: 5px;
+}
+
+/* ================== Input and Text Settings ================== */
+#input {
+    background-color: #3c3836; /* Gruvbox darker gray for input background */
+    color: #ebdbb2; /* Gruvbox light foreground */
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* ================== List and Scrollbar ================== */
+#scroll {
+    margin-top: 10px;
+}
+
+#list {
+    margin: 0;
+    padding: 0;
+}
+
+/* ================== Entry Styles ================== */
+#entry {
+    background-color: transparent; /* Entries have a transparent background by default */
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin: 2px 0;
+}
+
+#entry:nth-child(even) {
+    background-color: #2e2c2b; /* Slightly different background for even rows */
+}
+
+/* Style for the selected entry */
+#entry:focus {
+    background-color: #458588; /* Gruvbox blue for the selection highlight */
+    color: #ebdbb2; /* Ensure text is readable on the highlight */
+    border: none;
+    outline: none;
+}
+
+/* ================== Icon and Text Placement ================== */
+#img {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+#text {
+    font-size: 14px;
+}
+
+
