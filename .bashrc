@@ -103,6 +103,8 @@ alias free="free -mt"
 #vim to nvim
 alias vim="nvim"
 
+alias  svim="sudo -E -s nvim"
+
 #continue download
 alias wget="wget -c"
 

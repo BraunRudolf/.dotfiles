@@ -21,14 +21,17 @@
         "hyprland/window" // A module to display the active window title
     ],
     "modules-right": [
+        "tray",
         "custom/updates",
-        "pulseaudio",
-	"pulseaudio#microphone",
+        "wireplumber",
+ //        "pulseaudio",
+	// "pulseaudio#microphone",
         "backlight",
         "network",
         "battery",
         "clock",
-        "tray"
+        "custom/lock_screen",
+        "custom/power_btn"
     ],
 
 
@@ -48,8 +51,8 @@
     },
 
     "hyprland/window": {
-        "max-length": 50, // Limit the length of the window title
-        "format": "  {}", // Add an icon
+        // "max-length": 50, // Limit the length of the window title
+        "format": "{}", // Add an icon
         "tooltip": true
     },
 
@@ -59,6 +62,16 @@
         "on-click": "~/.config/waybar/scripts/update-sys.sh update",
         "interval": 300,
         "tooltip": true
+    },
+
+    "wireplumber": {
+          "format": "{icon} {volume}%",
+          "format-muted": "󰝟",
+          "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+          },
+      "on-click":       "killall pavucontrol  || pavucontrol",
+      "on-click-right": "playerctl --all-players pause"
     },
 
     // "battery": {
@@ -72,7 +85,7 @@
     //     "format-plugged": " {capacity}%", // Plugged-in icon
     //     "format-alt": "{time}",
     //     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"] // Gruvbox battery icons
-    // },
+     // },
 
     "pulseaudio": {
         "format": "󰕾 {volume}%", // Volume icon
@@ -105,6 +118,18 @@
 
     "tray": {
         "icon-size": 20
+    },
+
+    "custom/lock_screen": {
+        "format": "",
+        "on-click": "sh -c 'pidof hyprlock || hyprlock || loginctl lock-session'",
+        "tooltip": false
+    },
+
+    "custom/power_btn": {
+        "format": "",
+        "on-click": "sh -c 'shutdown now'",
+        "tooltip": false
     }
 }
 
