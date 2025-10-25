@@ -27,7 +27,7 @@ window#waybar {
 }
 
 #workspaces,
-#pulseaudio,
+#wireplumber,
 #backlight,
 #network,
 #battery,
@@ -74,6 +74,9 @@ window#waybar {
 }
 
 /* Volume */
+#wireplumber {
+    color: #8ec07c; /* Gruvbox light green */
+}
 #pulseaudio {
     color: #8ec07c; /* Gruvbox light green */
 }

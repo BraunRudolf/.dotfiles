@@ -423,3 +423,6 @@ alias personal='cp -Rf /personal/* ~'
 #sysinfo-retro
 #cpufetch
 #colorscript random
+
+# uv
+export PATH="/home/rudolf/.local/bin:$PATH"
