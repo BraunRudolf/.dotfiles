@@ -1,7 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	main = "nvim-treesitter.configs", -- This tells Lazy to use the new entry point
 	opts = {
 		ensure_installed = { "python", "bash", "c", "html", "lua", "markdown", "vim", "vimdoc" },
 		-- Autoinstall languages that are not installed
